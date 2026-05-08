@@ -310,7 +310,7 @@
                     const nombre = p.nombre || 'Sin nombre';
                     const desc = (p.descripcion && typeof p.descripcion === 'string') ? p.descripcion : '';
                     const precio = p.precio ? `€${parseFloat(p.precio).toFixed(2)}` : '';
-                    const img = p.imagen ? `<img src="${p.imagen}" alt="${nombre}">` : '🍽️';
+                    const img = p.imagen ? `<img src="${p.imagen}" alt="${name}">` : '🍽️';
                     const alergenos = (p.alergenos && Array.isArray(p.alergenos)) ?
                         p.alergenos.map(a => `<span class="alergeno-tag">${a}</span>`).join('') : '';
                     html += `
