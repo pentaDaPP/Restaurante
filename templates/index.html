@@ -307,7 +307,7 @@
                 }
                 let html = '';
                 platos.forEach(p => {
-                    const nombre = p.nombre || 'Sin nombre';
+                    const nombre = p.name || 'Sin nombre';
                     const desc = (p.descripcion && typeof p.descripcion === 'string') ? p.descripcion : '';
                     const precio = p.precio ? `€${parseFloat(p.precio).toFixed(2)}` : '';
                     const img = p.imagen ? `<img src="${p.imagen}" alt="${name}">` : '🍽️';
