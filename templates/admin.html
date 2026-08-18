@@ -613,7 +613,7 @@
 
 
             <input
-                id="nombre"
+                id="name"
                 type="text"
                 placeholder="Nombre del plato"
             >
@@ -1066,6 +1066,8 @@
                     .value
                     .trim();
 
+            const categoria = 
+                document.getElementById("categoria").value
 
             const imagen =
                 document
@@ -1140,7 +1142,7 @@
 
             const plato = {
 
-                name: name,
+                name: nombre,
 
                 precio :precio,
 
@@ -1235,7 +1237,7 @@
 
 
                     document
-                        .getElementById("nombre")
+                        .getElementById("name")
                         .value = "";
 
 
