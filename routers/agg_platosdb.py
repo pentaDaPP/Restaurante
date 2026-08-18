@@ -1,9 +1,11 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends ,Form,File,UploadFile
 from db.models.producto import Product
 from db.cliente import db
 from db.schemas.plato import plato_schema
 from routers.mostrar_platos import all_platos
 from db.auth import verificar_api_key
+import os
+
 
 router = APIRouter(prefix="/agg_platos",
                    tags=["agg_platos"],
@@ -11,7 +13,21 @@ router = APIRouter(prefix="/agg_platos",
 
 
 @router.post("/", status_code=201)
-async def agg_plato(product : Product , api_key : str = Depends(verificar_api_key)):
+async def agg_plato(
+    nombre: str = Form(...),
+    precio: float = Form(...),
+    descripcion: str = Form(...),
+    categoria: str = Form(...),
+    imagen: UploadFile = File(...),
+    api_key: str = Depends(verificar_api_key)
+):
+    contenido = await imagen.read()
+    nombre_archivo= imagen.filename
+    ruta_archivo = os.path.join("static/imagen",nombre_archivo)
+    
+    with open(ruta_archivo, "wb") as archivo:
+        archivo.write(contenido)
+    
     
     if(type(search_plato(product.name))) == Product:
         raise HTTPException(status_code=404,detail="el plato ya se encuentra")

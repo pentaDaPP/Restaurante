@@ -1023,7 +1023,12 @@
             Comprobar autorización
             =============================================
             */
-
+            const formData = new FormData();
+            formData.append("nombre",document.getElementById("nombre").value);
+            formData.append("precio",document.getElementById("precio").value);
+            formData.append("descripcion",document.getElementById("descripcion").value);
+            formData.append("categoria",document.getElementById("categoria").value);
+            formData.append("imagen",inputImagen.files[0]);
 
             if(!apiKey){
 
@@ -1069,11 +1074,7 @@
             const categoria = 
                 document.getElementById("categoria").value;
 
-            const imagen =
-                document
-                    .getElementById("imagen")
-                    .value
-                    .trim();
+            const imagen = inputImagen.files[0];
 
 
 
@@ -1140,20 +1141,7 @@
             */
 
 
-            const plato = {
-
-                name: nombre,
-
-                precio :precio,
-
-                descripcion:descripcion,
-
-                categoria : categoria,
-
-                imagen:imagen
-
-            };
-
+           
 
 
             const boton =
@@ -1189,17 +1177,11 @@
                         method:"POST",
 
                         headers:{
-
-                            "Content-Type":
-                                "application/json",
-
-                            "X-API-Key":
-                                apiKey
+                            "X-API-Key": apiKey
 
                         },
 
-                        body:
-                            JSON.stringify(plato)
+                        body: formData
 
                     }
 
