@@ -635,13 +635,13 @@
 
             <input
                 id="imagen"
-                type="text"
+                type="file"
                 placeholder="URL de la imagen"
             >
             <input
                 id="categoria"
                 type="text"
-                placeholder="categoria del plato"
+                placeholder="categoria del plato">
 
             <div class="guardar-container">
 
@@ -1390,6 +1390,13 @@
 
 
         }
+        const inputImagen = document.getElementById("imagen");
+
+        inputImagen.addEventListener("change", function () {
+            const archivo = inputImagen.files[0];
+
+            console.log(archivo);
+});
 
 
     </script>
