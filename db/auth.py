@@ -1,21 +1,23 @@
-# db/auth.py
 import os
 from fastapi import Header, HTTPException
-from dotenv import load_dotenv
 
-load_dotenv()
 
-# Obtener la API Key desde variables de entorno
-API_KEY = os.getenv("API_KEY", "mi_api_key_secreta_cambiar")
+def verificar_api_key(
+    x_api_key: str = Header(...)
+):
 
-async def verificar_api_key(x_api_key: str = Header(...)):
-    """
-    Dependencia para verificar la API Key en los headers.
-    Se usa en endpoints que requieren autenticación.
-    """
-    if x_api_key != API_KEY:
+    api_key_correcta = os.getenv("API_KEY")
+
+    if not api_key_correcta:
         raise HTTPException(
-            status_code=403,
-            detail="API Key inválida. Acceso no autorizado."
+            status_code=500,
+            detail="API Key del servidor no configurada"
         )
+
+    if x_api_key != api_key_correcta:
+        raise HTTPException(
+            status_code=401,
+            detail="API Key incorrecta"
+        )
+
     return x_api_key

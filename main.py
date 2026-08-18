@@ -1,10 +1,11 @@
-from fastapi import FastAPI, Request, HTTPException
+from fastapi import FastAPI, Request, HTTPException , Depends, Header, status
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
-from routers import agg_platosdb, mostrar_platos, update_plato, carrito
+from routers import agg_platosdb, mostrar_platos, update_plato, carrito,auth
 from starlette.middleware.sessions import SessionMiddleware
 import os
+from db.auth import verificar_api_key
 
 app = FastAPI()
 
@@ -13,6 +14,7 @@ app.include_router(agg_platosdb.router)
 app.include_router(mostrar_platos.router)
 app.include_router(update_plato.router)
 app.include_router(carrito.router)
+app.include_router(auth.router)
 
 
 # Archivos estáticos
@@ -40,6 +42,24 @@ async def home(request: Request):
         "categoria_actual": "todos",
         "cart_count": 0   # puedes calcularlo si ya tienes la sesión
     })
+
+"""
+ADMIN_API_KEY = os.getenv("ADMIN_API_KEY" , "mi_super_key_secreta")
+def require_admin_api_key(x_api_key: str = Header(None)):
+    if x_api_key is None:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="API key missing")
+    if x_api_key != ADMIN_API_KEY:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Invalid admin API key")
+    return True
+"""
+
+@app.get("/admin",response_class=HTMLResponse)
+async def admin(request : Request ):
+    return templates.TemplateResponse("admin.html",{
+        "request" : request
+    })
+
+
 
 """
 @app.get("/", status_code=200, response_class=HTMLResponse)
