@@ -1,11 +1,11 @@
 import os
 from fastapi import Header, HTTPException
-
+#from dotenv import load_dotenv
 
 def verificar_api_key(
     x_api_key: str = Header(...)
 ):
-
+    #load_dotenv()
     api_key_correcta = os.getenv("API_KEY")
 
     if not api_key_correcta:

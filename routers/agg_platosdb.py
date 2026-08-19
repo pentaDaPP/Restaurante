@@ -29,12 +29,17 @@ async def agg_plato(
         archivo.write(contenido)
     
     
-    if(type(search_plato(product.name))) == Product:
+    if(type(search_plato(nombre))) == Product:
         raise HTTPException(status_code=404,detail="el plato ya se encuentra")
     else:
    
-        product_dict = dict(product)
-        del product_dict["id"]
+        product_dict = {
+            "name" : nombre,
+            "precio" : precio,
+            "descripcion" : descripcion,
+            "categoria": categoria,
+            "imagen" : ruta_archivo
+        }
 
         id = db["platos"].insert_one(product_dict).inserted_id
         
@@ -48,4 +53,4 @@ def search_plato(name : str):
         plato = plato_schema(db["platos"].find_one({"name" : name}))
         return Product(**plato)
     except:
-        return "no se ha encontrado al usuario"
+        return "no se ha encontrado al plato"
