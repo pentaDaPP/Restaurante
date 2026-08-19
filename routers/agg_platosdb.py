@@ -21,25 +21,26 @@ async def agg_plato(
     imagen: UploadFile = File(...),
     api_key: str = Depends(verificar_api_key)
 ):
-    contenido = await imagen.read()
-    nombre_archivo= imagen.filename
-    ruta_archivo = os.path.join("static/imagen",nombre_archivo)
-    
-    with open(ruta_archivo, "wb") as archivo:
-        archivo.write(contenido)
     
     
     if(type(search_plato(nombre))) == Product:
         raise HTTPException(status_code=404,detail="el plato ya se encuentra")
     else:
-   
+        
+        contenido = await imagen.read()
+        nombre_archivo= imagen.filename
+        ruta_archivo = os.path.join("/static/imagen/",nombre_archivo)
+        
+        with open(ruta_archivo, "wb") as archivo:
+            archivo.write(contenido)
+        
         product_dict = {
-            "name" : nombre,
-            "precio" : precio,
-            "descripcion" : descripcion,
-            "categoria": categoria,
-            "imagen" : ruta_archivo
-        }
+                    "name" : nombre,
+                    "precio" : precio,
+                    "descripcion" : descripcion,
+                    "categoria": categoria,
+                    "imagen" : ruta_archivo
+                }
 
         id = db["platos"].insert_one(product_dict).inserted_id
         
