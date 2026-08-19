@@ -26,14 +26,16 @@ async def agg_plato(
     if(type(search_plato(nombre))) == Product:
         raise HTTPException(status_code=404,detail="el plato ya se encuentra")
     else:
+        print("1-entro al endpoint")
         
         contenido = await imagen.read()
+        print("2 - imagen leida")
         nombre_archivo= imagen.filename
         ruta_archivo = os.path.join("/static/imagen/",nombre_archivo)
         
         with open(ruta_archivo, "wb") as archivo:
             archivo.write(contenido)
-        
+        print("3-imagen guardada")
         product_dict = {
                     "name" : nombre,
                     "precio" : precio,
@@ -43,7 +45,7 @@ async def agg_plato(
                 }
 
         id = db["platos"].insert_one(product_dict).inserted_id
-        
+        print("insertado en mongo")
         new_plato = plato_schema(db["platos"].find_one({"_id" : id }))
         
         return Product(**new_plato)
