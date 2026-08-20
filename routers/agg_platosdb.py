@@ -34,7 +34,7 @@ async def agg_plato(
         print("tipo", imagen.content_type)
         print("2 - imagen leida")
         nombre_archivo= imagen.filename
-        ruta_archivo = os.path.join("/static/imagen/",nombre_archivo)
+        ruta_archivo = os.path.join("static/imagen/",nombre_archivo)
         try:
             print("3-antes de guardar archivo")
             with open(ruta_archivo, "wb") as archivo:
