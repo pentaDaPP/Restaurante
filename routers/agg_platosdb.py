@@ -5,7 +5,6 @@ from db.schemas.plato import plato_schema
 from routers.mostrar_platos import all_platos
 from db.auth import verificar_api_key
 import os
-import cloudinary_config
 import cloudinary.uploader
 
 router = APIRouter(prefix="/agg_platos",
