@@ -905,10 +905,15 @@
 }
 
         async function cargarPlatos() {
-            const respuesta = await fetch(API_URL + "/mostrar_platos")
-            const platos = await respuesta.json()
-            mostarPlatos(platos)
-        }
+           try{
+                const respuesta = await fetch(API_URL + "/mostrar_platos/")
+                const platos = await respuesta.json()
+                
+                mostarPlatos(platos);
+            }catch(error){
+                console.error("error cargando platos",error);
+            }
+    }
 
         function mostrarEliminar(){
             document.getElementById("zonaEliminar").style.display = "block";
