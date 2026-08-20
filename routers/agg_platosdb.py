@@ -5,7 +5,8 @@ from db.schemas.plato import plato_schema
 from routers.mostrar_platos import all_platos
 from db.auth import verificar_api_key
 import os
-
+import cloudinary_config
+import cloudinary.uploader
 
 router = APIRouter(prefix="/agg_platos",
                    tags=["agg_platos"],
@@ -26,34 +27,19 @@ async def agg_plato(
     if(type(search_plato(nombre))) == Product:
         raise HTTPException(status_code=404,detail="el plato ya se encuentra")
     else:
-        print("1-entro al endpoint")
         
-        contenido = await imagen.read()
-        print("nombre", imagen.filename)
-        print("size", len(contenido))
-        print("tipo", imagen.content_type)
-        print("2 - imagen leida")
-        nombre_archivo= imagen.filename
-        ruta_archivo = os.path.join("static/imagen/",nombre_archivo)
-        try:
-            print("3-antes de guardar archivo")
-            with open(ruta_archivo, "wb") as archivo:
-                archivo.write(contenido)
-            print("4-archivo guardado")
-        except Exception as e:
-            print("error guardando imagen",str(e))
-            raise e
-            
+        resultado = cloudinary.uploader.upload(imagen.file) 
+        url_imagen = resultado["secure_url"]
         product_dict = {
                     "name" : nombre,
                     "precio" : precio,
                     "descripcion" : descripcion,
                     "categoria": categoria,
-                    "imagen" : ruta_archivo
+                    "imagen" : url_imagen
                 }
-        print("5-antes de mongodb")
+
         id = db["platos"].insert_one(product_dict).inserted_id
-        print("6-mongodb correcto")
+
         new_plato = plato_schema(db["platos"].find_one({"_id" : id }))
         
         return Product(**new_plato)

@@ -8,3 +8,4 @@ starlette==0.41.3
 markupsafe==2.1.5
 aiofiles==24.1.0
 itsdangerous==2.2.0
+cloudinary
