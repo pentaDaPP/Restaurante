@@ -35,11 +35,15 @@ async def agg_plato(
         print("2 - imagen leida")
         nombre_archivo= imagen.filename
         ruta_archivo = os.path.join("/static/imagen/",nombre_archivo)
-        
-        print("3-antes de guardar archivo")
-        with open(ruta_archivo, "wb") as archivo:
-            archivo.write(contenido)
-        print("4-archivo guardado")
+        try:
+            print("3-antes de guardar archivo")
+            with open(ruta_archivo, "wb") as archivo:
+                archivo.write(contenido)
+            print("4-archivo guardado")
+        except Exception as e:
+            print("error guardando imagen",str(e))
+            raise e
+            
         product_dict = {
                     "name" : nombre,
                     "precio" : precio,
