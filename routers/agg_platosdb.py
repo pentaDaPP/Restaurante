@@ -29,6 +29,9 @@ async def agg_plato(
         print("1-entro al endpoint")
         
         contenido = await imagen.read()
+        print("nombre", imagen.filename)
+        print("size", len(contenido))
+        print("tipo", imagen.content_type)
         print("2 - imagen leida")
         nombre_archivo= imagen.filename
         ruta_archivo = os.path.join("/static/imagen/",nombre_archivo)
