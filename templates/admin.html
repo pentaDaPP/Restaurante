@@ -914,9 +914,67 @@
                 console.error("error cargando platos",error);
             }
     }
-        async function eliminarPlato() {
-            console.log(id)
+
+    async function eliminarPlato(id){
+
+    console.log("Eliminando:", id);
+
+
+    const confirmar = confirm(
+        "¿Seguro que quieres eliminar este plato?"
+    );
+
+
+    if(!confirmar){
+        return;
+    }
+
+
+    try{
+
+        const respuesta = await fetch(
+            API_URL + "/delete_plato/" + id,
+            {
+                method:"DELETE",
+                headers:{
+                    "X-API-Key": apiKey
+                }
+            }
+        );
+
+
+        const resultado = await respuesta.json();
+
+
+        console.log(resultado);
+
+
+        if(respuesta.ok){
+
+            alert("Plato eliminado correctamente");
+
+            cargarPlatos();
+
+        }else{
+
+            alert(
+                resultado.detail || 
+                "Error eliminando plato"
+            );
+
         }
+
+
+    }catch(error){
+
+        console.error(
+            "Error eliminando:",
+            error
+        );
+
+    }
+
+}
 
         function mostrarEliminar(){
             document.getElementById("zonaEliminar").style.display = "block";
