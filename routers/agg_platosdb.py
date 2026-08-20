@@ -36,9 +36,10 @@ async def agg_plato(
         nombre_archivo= imagen.filename
         ruta_archivo = os.path.join("/static/imagen/",nombre_archivo)
         
+        print("3-antes de guardar archivo")
         with open(ruta_archivo, "wb") as archivo:
             archivo.write(contenido)
-        print("3-imagen guardada")
+        print("4-archivo guardado")
         product_dict = {
                     "name" : nombre,
                     "precio" : precio,
@@ -46,9 +47,9 @@ async def agg_plato(
                     "categoria": categoria,
                     "imagen" : ruta_archivo
                 }
-
+        print("5-antes de mongodb")
         id = db["platos"].insert_one(product_dict).inserted_id
-        print("insertado en mongo")
+        print("6-mongodb correcto")
         new_plato = plato_schema(db["platos"].find_one({"_id" : id }))
         
         return Product(**new_plato)
