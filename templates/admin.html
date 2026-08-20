@@ -909,7 +909,7 @@
                 const respuesta = await fetch(API_URL + "/mostrar_platos/")
                 const platos = await respuesta.json()
                 
-                mostarPlatos(platos);
+                mostrarPlatos(platos);
             }catch(error){
                 console.error("error cargando platos",error);
             }
