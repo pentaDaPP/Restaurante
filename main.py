@@ -20,8 +20,8 @@ app.include_router(delete_plato.router)
 
 
 # Archivos estáticos
-app.mount("/static", StaticFiles(directory="static"), name="static")
-app.mount("/static/imagen", StaticFiles(directory="static/imagen"), name="imagen")
+#app.mount("/static", StaticFiles(directory="static"), name="static")
+#app.mount("/static/imagen", StaticFiles(directory="static/imagen"), name="imagen")
 
 # Plantillas
 templates = Jinja2Templates(directory="templates")
