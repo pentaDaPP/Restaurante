@@ -29,12 +29,15 @@ async def agg_plato(
         
         resultado = cloudinary.uploader.upload(imagen.file) 
         url_imagen = resultado["secure_url"]
+        imagen_id = resultado["public_id"]
+        
         product_dict = {
                     "name" : nombre,
                     "precio" : precio,
                     "descripcion" : descripcion,
                     "categoria": categoria,
-                    "imagen" : url_imagen
+                    "imagen" : url_imagen,
+                    "imagen_id" : imagen_id
                 }
 
         id = db["platos"].insert_one(product_dict).inserted_id

@@ -2,7 +2,7 @@ from fastapi import FastAPI, Request, HTTPException , Depends, Header, status
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
-from routers import agg_platosdb, mostrar_platos, update_plato, carrito,auth, cloudinary_config
+from routers import agg_platosdb, mostrar_platos, update_plato, carrito,auth, cloudinary_config, delete_plato
 from starlette.middleware.sessions import SessionMiddleware
 import os
 from db.auth import verificar_api_key
@@ -15,6 +15,7 @@ app.include_router(mostrar_platos.router)
 app.include_router(update_plato.router)
 app.include_router(carrito.router)
 app.include_router(auth.router)
+app.include_router(delete_plato.router)
 
 
 

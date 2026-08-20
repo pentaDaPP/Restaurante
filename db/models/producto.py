@@ -7,5 +7,5 @@ class Product(BaseModel):
     precio : float
     categoria : str
     imagen : str
+    imagen_id : str | None = None
     descripcion : str
-    

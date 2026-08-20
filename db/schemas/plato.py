@@ -5,5 +5,6 @@ def plato_schema(plato) -> dict:
             "precio": plato["precio"],
             "categoria": plato["categoria"],
             "imagen": plato["imagen"],
+            "imagen_id": plato.get("imagen_id"),
             "descripcion" : plato["descripcion"]
             }
